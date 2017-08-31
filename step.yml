@@ -1,12 +1,12 @@
 title: |-
-  Script File
+  Script Runner
 summary: |
   Run scripts from file
 description: |
   Run scripts from file
-website: https://github.com/ghaabor/bitrise-step-script-file
-source_code_url: https://github.com/ghaabor/bitrise-step-script-file
-support_url: https://github.com/ghaabor/bitrise-step-script-file/issues
+website: https://github.com/bitrise-steplib/steps-script-runner
+source_code_url: https://github.com/bitrise-steplib/steps-script-runner
+support_url: https://github.com/bitrise-steplib/steps-script-runner/issues
 host_os_tags:
   - osx-10.10
   - ubuntu-16.04
@@ -21,7 +21,7 @@ run_if: ""
 
 toolkit:
   go:
-    package_name: github.com/ghaabor/bitrise-step-script-file
+    package_name: github.com/bitrise-steplib/steps-script-runner
 
 inputs:
   - file_path: example.sh

@@ -1,4 +1,4 @@
-# Script File
+# Script Runner
 
 Run scripts from a file in your repository
 
