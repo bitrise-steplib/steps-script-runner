@@ -35,8 +35,8 @@ func Test_runScriptRuby(t *testing.T) {
 	require.NoError(t, fileutil.WriteStringToFile("_tmp/test.rb", "puts 'This is a Ruby script'"))
 
 	exitCode, err := runScript("ruby", "_tmp/test.rb")
+	require.NoError(t, err)
 	require.Equal(t, 0, exitCode)
-	require.Equal(t, nil, err)
 }
 
 func Test_runScriptGo(t *testing.T) {
@@ -54,6 +54,6 @@ func main() {
 	require.NoError(t, fileutil.WriteStringToFile("_tmp/test.go", goScript))
 
 	exitCode, err := runScript("go", "_tmp/test.go")
+	require.NoError(t, err)
 	require.Equal(t, 0, exitCode)
-	require.Equal(t, nil, err)
 }
