@@ -33,7 +33,6 @@ inputs:
       is_required: true
   - runner_bin: "bash"
     opts:
-      category: Config
       title: "Execute with / runner binary"
       description: |
         The executor to be used for running the script.
@@ -47,7 +46,7 @@ inputs:
         - "go"
   - working_dir: "$BITRISE_SOURCE_DIR"
     opts:
-      category: Config
+      category: Debug
       title: "Working directory"
       description: |
         This directory will be set as the current working
