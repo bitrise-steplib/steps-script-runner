@@ -43,6 +43,24 @@ workflows:
         - working_dir: ./
         - is_debug: $IS_DEBUG
     - script:
+        title: Create test_failing.sh file
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -e
+            echo "exit 222" > test_failing.sh.sh
+        - is_debug: false
+    - path::./:
+        title: Test Bash failure
+        description: |-
+          Test running a failing Bash script
+        is_skippable: true
+        run_if: true
+        inputs:
+        - file_path: "test_failing.sh.sh"
+        - working_dir: ./
+        - is_debug: $IS_DEBUG
+    - script:
         title: Create test.rb file
         inputs:
         - content: |-
