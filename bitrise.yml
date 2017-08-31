@@ -33,13 +33,6 @@ workflows:
             set -e
             echo "echo 'This is a shell script'" > test.sh
         - is_debug: false
-    - script:
-        title: Create test.rb file
-        inputs:
-        - content: |-
-            #!/bin/bash
-            set -e
-            echo "puts \"This is a ruby script\"" > test.rb
     - path::./:
         title: Test Bash
         description: |-
@@ -49,6 +42,13 @@ workflows:
         - file_path: "test.sh"
         - working_dir: ./
         - is_debug: $IS_DEBUG
+    - script:
+        title: Create test.rb file
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -e
+            echo "puts \"This is a ruby script\"" > test.rb
     - path::./:
         title: Test Ruby
         description: |-
