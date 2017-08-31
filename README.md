@@ -1,6 +1,6 @@
 # Script File
 
-Run scripts from file
+Run scripts from a file in your repository
 
 
 ## How to use this Step
