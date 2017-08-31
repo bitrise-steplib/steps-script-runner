@@ -24,7 +24,7 @@ toolkit:
     package_name: github.com/bitrise-steplib/steps-script-runner
 
 inputs:
-  - file_path: example.sh
+  - file_path:
     opts:
       title: "Script location"
       description: |

@@ -31,7 +31,7 @@ workflows:
         - content: |-
             #!/bin/bash
             set -e
-            echo "echo 'This is a Bash intergration test'" > int_test.sh
+            echo "echo 'This is a Bash integration test'" > int_test.sh
         - is_debug: false
     - path::./:
         title: Test Bash
