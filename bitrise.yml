@@ -26,12 +26,12 @@ workflows:
         - path: ./_tmp
         - is_create_path: true
     - script:
-        title: Create test.sh file
+        title: Create int_test.sh file
         inputs:
         - content: |-
             #!/bin/bash
             set -e
-            echo "echo 'This is a shell script'" > test.sh
+            echo "echo 'This is a Bash intergration test'" > int_test.sh
         - is_debug: false
     - path::./:
         title: Test Bash
@@ -39,16 +39,16 @@ workflows:
           Test running a Bash script
         run_if: true
         inputs:
-        - file_path: "test.sh"
+        - file_path: "int_test.sh"
         - working_dir: ./
         - is_debug: $IS_DEBUG
     - script:
-        title: Create test_failing.sh file
+        title: Create int_test_failing.sh file
         inputs:
         - content: |-
             #!/bin/bash
             set -e
-            echo "exit 222" > test_failing.sh.sh
+            echo "exit 222" > int_test_failing.sh
         - is_debug: false
     - path::./:
         title: Test Bash failure
@@ -57,24 +57,48 @@ workflows:
         is_skippable: true
         run_if: true
         inputs:
-        - file_path: "test_failing.sh.sh"
+        - file_path: "int_test_failing.sh"
         - working_dir: ./
         - is_debug: $IS_DEBUG
     - script:
-        title: Create test.rb file
+        title: Create int_test.rb file
         inputs:
         - content: |-
             #!/bin/bash
             set -e
-            echo "puts \"This is a ruby script\"" > test.rb
+            echo "puts \"This is a Ruby integration test\"" > int_test.rb
     - path::./:
         title: Test Ruby
         description: |-
           Test running a Ruby script
         inputs:
-        - file_path: "test.rb"
+        - file_path: "int_test.rb"
         - working_dir: ./
         - runner_bin: "ruby"
+        - is_debug: $IS_DEBUG
+    - script:
+        title: Create int_script.go file
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -e
+            echo "package main
+
+            import (
+              \"fmt\"
+            )
+
+            func main() {
+              fmt.Println(\"This is a Go integration test\")
+            }" > int_script.go
+    - path::./:
+        title: Test Go
+        description: |-
+          Test running a Go script
+        inputs:
+        - file_path: "int_script.go"
+        - working_dir: ./
+        - runner_bin: "go"
         - is_debug: $IS_DEBUG
 
   go-tests:
