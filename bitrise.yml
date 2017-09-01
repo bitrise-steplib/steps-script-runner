@@ -53,7 +53,7 @@ workflows:
         - is_debug: $IS_DEBUG
         - runner: "/bin/bash -l"
     - path::./:
-        title: Test Zsh
+        title: Test Sh
         description: |-
           Test running a Bash script
         run_if: true
@@ -61,7 +61,7 @@ workflows:
         - file_path: "int_test.sh"
         - working_dir: ./
         - is_debug: $IS_DEBUG
-        - runner: "/bin/zsh"
+        - runner: "/bin/sh"
     - script:
         title: Create int_test_failing.sh file
         inputs:

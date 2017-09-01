@@ -36,10 +36,10 @@ inputs:
       title: "Execute with / runner binary"
       description: |
         The executor to be used for running the script.
-        You can use any binary which is in the PATH (bash/ruby/etc.),
-        absolut paths (e. g. /bin/zsh) or binaries from env
-        (e. g. /usr/bin/env python). You can specify flags as well 
-        (e. g. /bin/bash -l).
+        You can use any binary which is in the PATH (bash/ruby/etc.), 
+        multipart commands (e. g. go run), absolut paths (e. g. /bin/sh) 
+        or binaries from env (e. g. /usr/bin/env python). You can 
+        specify flags as well (e. g. /bin/bash -l).
       is_required: true
   - working_dir: "$BITRISE_SOURCE_DIR"
     opts:
