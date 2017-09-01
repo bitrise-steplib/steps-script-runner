@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/ghaabor/bitrise-step-script-file",
+	"ImportPath": "github.com/ghaabor/steps-script-runner",
 	"GoVersion": "go1.9",
 	"GodepVersion": "v79",
 	"Packages": [
@@ -30,6 +30,10 @@
 			"ImportPath": "github.com/davecgh/go-spew/spew",
 			"Comment": "v1.1.0-7-ga476722",
 			"Rev": "a476722483882dd40b8111f0eb64e1d7f43f56e4"
+		},
+		{
+			"ImportPath": "github.com/kballard/go-shellquote",
+			"Rev": "cd60e84ee657ff3dc51de0b4f55dd299a3e136f2"
 		},
 		{
 			"ImportPath": "github.com/pmezard/go-difflib/difflib",

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kballard/go-shellquote"
+
 	"github.com/bitrise-io/go-utils/command"
 	"github.com/bitrise-io/go-utils/pathutil"
 	"github.com/bitrise-tools/go-steputils/input"
@@ -23,9 +25,9 @@ func main() {
 		fmt.Printf("file_path: %s", err.Error())
 		os.Exit(1)
 	}
-	runnerBin := os.Getenv("runner_bin")
-	if err := input.ValidateWithOptions(runnerBin, "bash", "ruby", "go"); err != nil {
-		fmt.Printf("runner_bin: %s", err.Error())
+	runner := os.Getenv("runner")
+	if err := input.ValidateIfNotEmpty(runner); err != nil {
+		fmt.Printf("runner: %s", err.Error())
 		os.Exit(1)
 	}
 	workingDir := os.Getenv("working_dir")
@@ -34,7 +36,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	exitCode, err := runScript(runnerBin, filePath, workingDir)
+	exitCode, err := runScript(runner, filePath, workingDir)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -42,14 +44,20 @@ func main() {
 	os.Exit(exitCode)
 }
 
-func runScript(runnerBin string, filePath string, workingDir string) (int, error) {
-	paramList := []string{}
-	if runnerBin == "go" {
-		paramList = append(paramList, "run")
+func runScript(runner string, filePath string, workingDir string) (int, error) {
+	var paramList []string
+	var binary string
+
+	if splitRunner, err := shellquote.Split(runner); err == nil {
+		binary = splitRunner[0]
+		paramList = splitRunner[1:]
+	} else {
+		return 1, fmt.Errorf("Error: %s", err.Error())
 	}
+
 	paramList = append(paramList, filePath)
 
-	script := command.NewWithStandardOuts(runnerBin, paramList...)
+	script := command.NewWithStandardOuts(binary, paramList...)
 	script = script.SetDir(workingDir)
 
 	exitCode, err := script.RunAndReturnExitCode()

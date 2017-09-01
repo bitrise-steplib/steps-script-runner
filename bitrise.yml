@@ -42,6 +42,26 @@ workflows:
         - file_path: "int_test.sh"
         - working_dir: ./
         - is_debug: $IS_DEBUG
+    - path::./:
+        title: Test Bash in login shell
+        description: |-
+          Test running a Bash script
+        run_if: true
+        inputs:
+        - file_path: "int_test.sh"
+        - working_dir: ./
+        - is_debug: $IS_DEBUG
+        - runner: "/bin/bash -l"
+    - path::./:
+        title: Test Zsh
+        description: |-
+          Test running a Bash script
+        run_if: true
+        inputs:
+        - file_path: "int_test.sh"
+        - working_dir: ./
+        - is_debug: $IS_DEBUG
+        - runner: "/bin/zsh"
     - script:
         title: Create int_test_failing.sh file
         inputs:
@@ -74,7 +94,16 @@ workflows:
         inputs:
         - file_path: "int_test.rb"
         - working_dir: ./
-        - runner_bin: "ruby"
+        - runner: "ruby"
+        - is_debug: $IS_DEBUG
+    - path::./:
+        title: Test Ruby from env
+        description: |-
+          Test running a Ruby script
+        inputs:
+        - file_path: "int_test.rb"
+        - working_dir: ./
+        - runner: "/usr/bin/env ruby"
         - is_debug: $IS_DEBUG
     - script:
         title: Create int_script.go file
@@ -98,7 +127,7 @@ workflows:
         inputs:
         - file_path: "int_script.go"
         - working_dir: ./
-        - runner_bin: "go"
+        - runner: "go run"
         - is_debug: $IS_DEBUG
 
   go-tests:

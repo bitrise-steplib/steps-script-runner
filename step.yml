@@ -31,19 +31,16 @@ inputs:
         The script you want to run.
       is_expand: true
       is_required: true
-  - runner_bin: "bash"
+  - runner: "bash"
     opts:
       title: "Execute with / runner binary"
       description: |
         The executor to be used for running the script.
-        Currently you can use bash, ruby and go. If you
-        specify go, we're going to run the file with 
-        'go run'
+        You can use any binary which is in the PATH (bash/ruby/etc.),
+        absolut paths (e. g. /bin/zsh) or binaries from env
+        (e. g. /usr/bin/env python). You can specify flags as well 
+        (e. g. /bin/bash -l).
       is_required: true
-      value_options: 
-        - "bash"
-        - "ruby"
-        - "go"
   - working_dir: "$BITRISE_SOURCE_DIR"
     opts:
       category: Debug
