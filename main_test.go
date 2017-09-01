@@ -69,7 +69,7 @@ func main() {
 	`
 	require.NoError(t, fileutil.WriteStringToFile("_tmp/test.go", goScript))
 
-	exitCode, err := runScript("go", "_tmp/test.go", workDir)
+	exitCode, err := runScript("go run", "_tmp/test.go", workDir)
 	require.NoError(t, err)
 	require.Equal(t, 0, exitCode)
 }
