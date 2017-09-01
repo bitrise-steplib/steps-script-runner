@@ -27,17 +27,17 @@ inputs:
   - file_path:
     opts:
       title: "Script location"
-      description: |
+      description: |-
         The script you want to run.
       is_expand: true
       is_required: true
   - runner: "bash"
     opts:
       title: "Execute with / runner binary"
-      description: |
+      description: |-
         The executor to be used for running the script.
         You can use any binary which is in the PATH (bash/ruby/etc.), 
-        multipart commands (e. g. go run), absolut paths (e. g. /bin/sh) 
+        multipart commands (e. g. go run), absolute paths (e. g. /bin/sh) 
         or binaries from env (e. g. /usr/bin/env python). You can 
         specify flags as well (e. g. /bin/bash -l).
       is_required: true
@@ -45,7 +45,7 @@ inputs:
     opts:
       category: Debug
       title: "Working directory"
-      description: |
+      description: |-
         This directory will be set as the current working
         directory for the script.
         Any relative path in the Script (file_path) will be
@@ -54,7 +54,7 @@ inputs:
     opts:
       category: Debug
       title: "Debug print?"
-      description: |
+      description: |-
         If debug=yes the step will print debug infos about
         the working dir, tmp file path, exit code, etc.
       value_options:
