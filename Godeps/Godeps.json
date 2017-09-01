@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/ghaabor/steps-script-runner",
+	"ImportPath": "github.com/bitrise-steplib/steps-script-runner",
 	"GoVersion": "go1.9",
 	"GodepVersion": "v79",
 	"Packages": [
