@@ -3,7 +3,7 @@ title: |-
 summary: |
   Run scripts from a file
 description: |
-  The Step runs a script from a file using a specified executor. It gives great flexibility and lets you run any file written in any scripting language, such as Bash, Ruby, PHP, Python, etc. 
+  The Step runs a script from a file using a specified executor. It provides great flexibility and lets you run any file written in any scripting language, such as Bash, Ruby, PHP, Python, etc. 
 
   ### Configuring the Step
 
