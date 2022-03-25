@@ -1,9 +1,22 @@
 title: |-
   Script Runner
 summary: |
-  Run scripts from file
+  Run scripts from a file
 description: |
-  Run scripts from file
+  The Step runs a script from a file using a specified executor. It gives great flexibility and lets you run any file written in any scripting language, such as Bash, Ruby, PHP, Python, etc. 
+
+  ### Configuring the Step
+
+  1. Choose a script to run by specifying its location and name in the **Script location** input. For example, if you have a script.py in your root directory, you could put in: `$BITRISE_SOURCE_DIR/script.py`.
+  1. Specify which executor to use for the script in the **Execute with / runner binary** input.
+  1. (Optional) Under the **Debug** tab, you can specify a working directory for the script in the **Working directory** input and enable debug logging in the **Debug print?** input. 
+
+  ### Related Steps
+
+  * [Script](https://www.bitrise.io/integrations/steps/script)
+  * [Remote Bash Script Runner](https://www.bitrise.io/integrations/steps/remote-script-runner)
+  * [Ruby Script runner with optional Gemfile support](https://www.bitrise.io/integrations/steps/ruby-script)
+
 website: https://github.com/bitrise-steplib/steps-script-runner
 source_code_url: https://github.com/bitrise-steplib/steps-script-runner
 support_url: https://github.com/bitrise-steplib/steps-script-runner/issues
@@ -48,14 +61,14 @@ inputs:
       description: |-
         This directory will be set as the current working
         directory for the script.
-        Any relative path in the Script (file_path) will be
+        Any relative path in the script (file_path) will be
         relative to this directory.
   - is_debug: "no"
     opts:
       category: Debug
       title: "Debug print?"
       description: |-
-        If debug=yes the step will print debug infos about
+        If you set this input to `yes` the Step will print debug related information about
         the working dir, tmp file path, exit code, etc.
       value_options:
         - "no"
