@@ -1,0 +1,116 @@
+format_version: "11"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+app:
+  envs:
+  - ORIGINAL_WORKDIR: $BITRISE_SOURCE_DIR
+  - IS_DEBUG: "yes"
+
+workflows:
+  test_bash:
+    title: Test Bash
+    envs:
+    - SCRIPT_PATH: int_test.sh
+    - SCRIPT_CONTENTS: "echo 'This is a Bash integration test'"
+    - SCRIPT_RUNNER: bash
+    after_run:
+    - _run
+
+  test_bash_login_shell:
+    title: Test Bash in login shell
+    envs:
+    - SCRIPT_PATH: int_test.sh
+    - SCRIPT_CONTENTS: "echo 'This is a Bash integration test'"
+    - SCRIPT_RUNNER: /bin/bash -l
+    after_run:
+    - _run
+
+  test_sh:
+    title: Test Sh
+    envs:
+    - SCRIPT_PATH: int_test.sh
+    - SCRIPT_CONTENTS: "echo 'This is a Bash integration test'"
+    - SCRIPT_RUNNER: /bin/sh
+    after_run:
+    - _run
+
+  util_test_bash_failure:
+    title: Test Bash failure
+    envs:
+    - SCRIPT_PATH: int_test_failing.sh
+    - SCRIPT_CONTENTS: "exit 222"
+    - SCRIPT_RUNNER: bash
+    after_run:
+    - _run
+
+  test_bash_failure:
+    steps:
+    - script:
+        inputs:
+        - content: |-
+            set -ox pipefail
+
+            bitrise run --config ./e2e/bitrise.yml util_test_bash_failure
+            if [[ $? == 0 ]]; then
+              exit 1
+            fi
+
+  test_ruby:
+    title: Test running a Ruby script
+    envs:
+    - SCRIPT_PATH: int_test.rb
+    - SCRIPT_CONTENTS: "puts \"This is a Ruby integration test\""
+    - SCRIPT_RUNNER: ruby
+    after_run:
+    - _run
+
+  test_ruby_from_env:
+    title: Test Ruby from env
+    envs:
+    - SCRIPT_PATH: int_test.rb
+    - SCRIPT_CONTENTS: "puts \"This is a Ruby integration test\""
+    - SCRIPT_RUNNER: /usr/bin/env ruby
+    after_run:
+    - _run
+
+  test_go:
+    title: Test running a Go script
+    envs:
+    - SCRIPT_PATH: int_script.go
+    - SCRIPT_CONTENTS: |
+        package main
+
+        import (
+          "fmt"
+        )
+
+        func main() {
+          fmt.Println("This is a Go integration test")
+        }
+    - SCRIPT_RUNNER: go run
+    after_run:
+    - _run
+
+  _run:
+    steps:
+    - script:
+        inputs:
+        - content: |-
+            set -eox pipefail
+
+            if [[ "$SCRIPT_CONTENTS" == "" ]]; then
+              exit 1
+            fi
+            if [[ "$SCRIPT_PATH" == "" ]]; then
+              exit 1
+            fi
+            
+            # cd $ORIGINAL_WORKDIR
+            rm -rf ./_tmp
+            mkdir ./_tmp
+            echo "$SCRIPT_CONTENTS" > ./_tmp/$SCRIPT_PATH
+    - path::./:
+        inputs:
+        - file_path: ./_tmp/$SCRIPT_PATH
+        - runner: $SCRIPT_RUNNER
+        - is_debug: $IS_DEBUG

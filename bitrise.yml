@@ -1,131 +1,22 @@
-format_version: 4
+format_version: "11"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
-app:
-  envs:
-  - IS_DEBUG: "yes"
-
 workflows:
+  test:
+    after_run:
+    - check
+    - e2e
+
   check:
     steps:
     - git::https://github.com/bitrise-steplib/steps-check.git: { }
 
-  test:
-    before_run:
-    - check
+  e2e:
     steps:
-    - change-workdir:
-        title: Switch working dir to test / _tmp dir
-        description: |-
-          To prevent step testing issues, like referencing relative
-          files with just './some-file' in the step's code, which would
-          work for testing the step from this directory directly
-          but would break if the step is included in another `bitrise.yml`.
-        run_if: true
+    - git::https://github.com/bitrise-steplib/steps-check.git:
         inputs:
-        - path: ./_tmp
-        - is_create_path: true
-    - script:
-        title: Create int_test.sh file
-        inputs:
-        - content: |-
-            #!/bin/bash
-            set -e
-            echo "echo 'This is a Bash integration test'" > int_test.sh
-        - is_debug: false
-    - path::./:
-        title: Test Bash
-        description: |-
-          Test running a Bash script
-        run_if: true
-        inputs:
-        - file_path: int_test.sh
-        - working_dir: ./
-        - is_debug: $IS_DEBUG
-    - path::./:
-        title: Test Bash in login shell
-        description: |-
-          Test running a Bash script
-        run_if: true
-        inputs:
-        - file_path: int_test.sh
-        - working_dir: ./
-        - is_debug: $IS_DEBUG
-        - runner: /bin/bash -l
-    - path::./:
-        title: Test Sh
-        description: |-
-          Test running a Bash script
-        run_if: true
-        inputs:
-        - file_path: int_test.sh
-        - working_dir: ./
-        - is_debug: $IS_DEBUG
-        - runner: /bin/sh
-    - script:
-        title: Create int_test_failing.sh file
-        inputs:
-        - content: |-
-            #!/bin/bash
-            set -e
-            echo "exit 222" > int_test_failing.sh
-        - is_debug: false
-    - path::./:
-        title: Test Bash failure
-        description: |-
-          Test running a failing Bash script
-        is_skippable: true
-        run_if: true
-        inputs:
-        - file_path: int_test_failing.sh
-        - working_dir: ./
-        - is_debug: $IS_DEBUG
-    - script:
-        title: Create int_test.rb file
-        inputs:
-        - content: |-
-            #!/bin/bash
-            set -e
-            echo "puts \"This is a Ruby integration test\"" > int_test.rb
-    - path::./:
-        title: Test Ruby
-        description: |-
-          Test running a Ruby script
-        inputs:
-        - file_path: int_test.rb
-        - working_dir: ./
-        - runner: ruby
-        - is_debug: $IS_DEBUG
-    - path::./:
-        title: Test Ruby from env
-        description: |-
-          Test running a Ruby script
-        inputs:
-        - file_path: int_test.rb
-        - working_dir: ./
-        - runner: /usr/bin/env ruby
-        - is_debug: $IS_DEBUG
-    - script:
-        title: Create int_script.go file
-        inputs:
-        - content: |-
-            #!/bin/bash
-            set -e
-            echo "package main
+        - workflow: e2e
 
-            import (
-              \"fmt\"
-            )
-
-            func main() {
-              fmt.Println(\"This is a Go integration test\")
-            }" > int_script.go
-    - path::./:
-        title: Test Go
-        description: |-
-          Test running a Go script
-        inputs:
-        - file_path: int_script.go
-        - working_dir: ./
-        - runner: go run
-        - is_debug: $IS_DEBUG
+  generate_readme:
+    steps:
+    - git::https://github.com/bitrise-steplib/steps-readme-generator.git@main: { }
