@@ -59,7 +59,7 @@ workflows:
     title: Test running a Ruby script
     envs:
     - SCRIPT_PATH: int_test.rb
-    - SCRIPT_CONTENTS: puts \"This is a Ruby integration test\"
+    - SCRIPT_CONTENTS: puts "This is a Ruby integration test"
     - SCRIPT_RUNNER: ruby
     after_run:
     - _run
@@ -68,7 +68,7 @@ workflows:
     title: Test Ruby from env
     envs:
     - SCRIPT_PATH: int_test.rb
-    - SCRIPT_CONTENTS: puts \"This is a Ruby integration test\"
+    - SCRIPT_CONTENTS: puts "This is a Ruby integration test"
     - SCRIPT_RUNNER: /usr/bin/env ruby
     after_run:
     - _run
