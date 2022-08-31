@@ -11,7 +11,7 @@ workflows:
     title: Test Bash
     envs:
     - SCRIPT_PATH: int_test.sh
-    - SCRIPT_CONTENTS: "echo 'This is a Bash integration test'"
+    - SCRIPT_CONTENTS: echo 'This is a Bash integration test'
     - SCRIPT_RUNNER: bash
     after_run:
     - _run
@@ -20,7 +20,7 @@ workflows:
     title: Test Bash in login shell
     envs:
     - SCRIPT_PATH: int_test.sh
-    - SCRIPT_CONTENTS: "echo 'This is a Bash integration test'"
+    - SCRIPT_CONTENTS: echo 'This is a Bash integration test'
     - SCRIPT_RUNNER: /bin/bash -l
     after_run:
     - _run
@@ -29,7 +29,7 @@ workflows:
     title: Test Sh
     envs:
     - SCRIPT_PATH: int_test.sh
-    - SCRIPT_CONTENTS: "echo 'This is a Bash integration test'"
+    - SCRIPT_CONTENTS: echo 'This is a Bash integration test'
     - SCRIPT_RUNNER: /bin/sh
     after_run:
     - _run
@@ -38,7 +38,7 @@ workflows:
     title: Test Bash failure
     envs:
     - SCRIPT_PATH: int_test_failing.sh
-    - SCRIPT_CONTENTS: "exit 222"
+    - SCRIPT_CONTENTS: exit 222
     - SCRIPT_RUNNER: bash
     after_run:
     - _run
@@ -59,7 +59,7 @@ workflows:
     title: Test running a Ruby script
     envs:
     - SCRIPT_PATH: int_test.rb
-    - SCRIPT_CONTENTS: "puts \"This is a Ruby integration test\""
+    - SCRIPT_CONTENTS: puts \"This is a Ruby integration test\"
     - SCRIPT_RUNNER: ruby
     after_run:
     - _run
@@ -68,7 +68,7 @@ workflows:
     title: Test Ruby from env
     envs:
     - SCRIPT_PATH: int_test.rb
-    - SCRIPT_CONTENTS: "puts \"This is a Ruby integration test\""
+    - SCRIPT_CONTENTS: puts \"This is a Ruby integration test\"
     - SCRIPT_RUNNER: /usr/bin/env ruby
     after_run:
     - _run
@@ -80,9 +80,7 @@ workflows:
     - SCRIPT_CONTENTS: |
         package main
 
-        import (
-          "fmt"
-        )
+        import "fmt"
 
         func main() {
           fmt.Println("This is a Go integration test")
@@ -104,7 +102,7 @@ workflows:
             if [[ "$SCRIPT_PATH" == "" ]]; then
               exit 1
             fi
-            
+
             # cd $ORIGINAL_WORKDIR
             rm -rf ./_tmp
             mkdir ./_tmp
