@@ -1,0 +1,24 @@
+# github.com/bitrise-io/go-utils v1.0.2
+## explicit; go 1.13
+github.com/bitrise-io/go-utils/command
+github.com/bitrise-io/go-utils/fileutil
+github.com/bitrise-io/go-utils/pathutil
+# github.com/bitrise-tools/go-steputils v0.0.0-20170601152801-a848c9870ff7
+## explicit
+github.com/bitrise-tools/go-steputils/input
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
+# github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
+## explicit
+github.com/kballard/go-shellquote
+# github.com/pmezard/go-difflib v1.0.0
+## explicit
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v1.8.0
+## explicit; go 1.13
+github.com/stretchr/testify/assert
+github.com/stretchr/testify/require
+# gopkg.in/yaml.v3 v3.0.1
+## explicit
+gopkg.in/yaml.v3
