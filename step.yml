@@ -3,13 +3,13 @@ title: |-
 summary: |
   Run scripts from a file
 description: |
-  The Step runs a script from a file using a specified executor. It provides great flexibility and lets you run any file written in any scripting language, such as Bash, Ruby, PHP, Python, etc. 
+  The Step runs a script from a file using a specified executor. It provides great flexibility and lets you run any file written in any scripting language, such as Bash, Ruby, PHP, Python, etc.
 
   ### Configuring the Step
 
   1. Choose a script to run by specifying its location and name in the **Script location** input. For example, if you have a `script.py` in your root directory, you could put in: `$BITRISE_SOURCE_DIR/script.py`.
   1. Specify which executor to use for the script in the **Execute with / runner binary** input.
-  1. (Optional) Under the **Debug** tab, you can specify a working directory for the script in the **Working directory** input and enable debug logging in the **Debug print?** input. 
+  1. (Optional) Under the **Debug** tab, you can specify a working directory for the script in the **Working directory** input and enable debug logging in the **Debug print?** input.
 
   ### Related Steps
 
