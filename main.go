@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"os"
 
@@ -52,7 +51,7 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 		binary = splitRunner[0]
 		paramList = splitRunner[1:]
 	} else {
-		return 1, fmt.Errorf("Error: %s", err.Error())
+		return 1, fmt.Errorf("shell quote split errpr: %s", err.Error())
 	}
 
 	paramList = append(paramList, filePath)
@@ -61,7 +60,7 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 
 	out, err := script.RunAndReturnTrimmedCombinedOutput()
 	if err != nil {
-		return 1, fmt.Errorf("Error: %s\n%s", err.Error(), out)
+		return 1, fmt.Errorf("script run error: %s\n%s", err.Error(), out)
 	}
 
 	return 0, nil
