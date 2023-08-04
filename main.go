@@ -59,16 +59,10 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 
 	script := command.NewWithStandardOuts(binary, paramList...).SetStdin(os.Stdin).SetDir(workingDir)
 
-	exitCode, err := script.RunAndReturnExitCode()
+	out, err := script.RunAndReturnTrimmedCombinedOutput()
 	if err != nil {
-		errorString := fmt.Sprintf("Error: %s, command: %#v", err.Error(), script.GetCmd())
-
-		if exitCode == 0 {
-			return 1, errors.New(errorString)
-		}
-
-		return exitCode, errors.New(errorString)
+		return 1, fmt.Errorf("Error: %s\n%s", err.Error(), out)
 	}
 
-	return exitCode, nil
+	return 0, nil
 }
