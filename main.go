@@ -60,7 +60,8 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 
 	out, err := script.RunAndReturnTrimmedCombinedOutput()
 	if err != nil {
-		return 1, fmt.Errorf("script run error: %s\n%s", err.Error(), out)
+		exitCode := script.GetCmd().ProcessState.ExitCode()
+		return exitCode, fmt.Errorf("script run error: %s\n%s", err.Error(), out)
 	}
 
 	return 0, nil
