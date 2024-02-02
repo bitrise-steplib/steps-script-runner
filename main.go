@@ -51,7 +51,7 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 		binary = splitRunner[0]
 		paramList = splitRunner[1:]
 	} else {
-		return 1, fmt.Errorf("shell quote split errpr: %s", err.Error())
+		return 1, fmt.Errorf("shell quote split error: %s", err.Error())
 	}
 
 	paramList = append(paramList, filePath)
