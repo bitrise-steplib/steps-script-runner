@@ -51,17 +51,16 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 		binary = splitRunner[0]
 		paramList = splitRunner[1:]
 	} else {
-		return 1, fmt.Errorf("shell quote split error: %s", err.Error())
+		return 1, fmt.Errorf("shell quote split errpr: %s", err.Error())
 	}
 
 	paramList = append(paramList, filePath)
 
 	script := command.New(binary, paramList...).SetDir(workingDir)
 
-	out, err := script.RunAndReturnTrimmedCombinedOutput()
+	exitCode, err := script.RunAndReturnExitCode()
 	if err != nil {
-		exitCode := script.GetCmd().ProcessState.ExitCode()
-		return exitCode, fmt.Errorf("script run error: %s\n%s", err.Error(), out)
+		return exitCode, fmt.Errorf("script run error: %w", err)
 	}
 
 	return 0, nil
