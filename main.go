@@ -6,7 +6,7 @@ import (
 
 	"github.com/kballard/go-shellquote"
 
-	"github.com/bitrise-io/colorstring"
+	"github.com/bitrise-io/go-utils/colorstring"
 	"github.com/bitrise-io/go-utils/command"
 	"github.com/bitrise-io/go-utils/pathutil"
 	"github.com/bitrise-tools/go-steputils/input"
@@ -48,7 +48,7 @@ Error: %s
 `,
 			colorstring.Cyan(filePath),
 			colorstring.Red(workingDir),
-			colorstring.Cyan(string(exitCode)),
+			colorstring.Cyan(fmt.Sprintf("%d", exitCode)),
 			colorstring.Red(err.Error()),
 		)
 		fmt.Println("-------------------") // Separate streamed stdout/stderr from the step's error message
