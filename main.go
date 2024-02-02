@@ -56,7 +56,7 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 
 	paramList = append(paramList, filePath)
 
-	script := command.New(binary, paramList...).SetDir(workingDir)
+	script := command.NewWithStandardOuts(binary, paramList...).SetDir(workingDir)
 
 	exitCode, err := script.RunAndReturnExitCode()
 	if err != nil {
