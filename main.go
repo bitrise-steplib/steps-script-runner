@@ -41,14 +41,14 @@ func main() {
 		prettyError := fmt.Sprintf(
 			`Your script returned an error. Check the output above for the root cause.
 Additional details:
-Script: %s
-Working directory: %s
-Exit code: %s
-Error: %s
+Script: \t%s
+Working directory: \t%s
+Exit code: \t%s
+Error: \t%s
 `,
 			colorstring.Cyan(filePath),
-			colorstring.Red(workingDir),
-			colorstring.Cyan(fmt.Sprintf("%d", exitCode)),
+			colorstring.Cyan(workingDir),
+			colorstring.Red(fmt.Sprintf("%d", exitCode)),
 			colorstring.Red(err.Error()),
 		)
 		fmt.Println("-------------------") // Separate streamed stdout/stderr from the step's error message
