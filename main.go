@@ -1,12 +1,12 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"os"
 
 	"github.com/kballard/go-shellquote"
 
+	"github.com/bitrise-io/go-utils/colorstring"
 	"github.com/bitrise-io/go-utils/command"
 	"github.com/bitrise-io/go-utils/pathutil"
 	"github.com/bitrise-tools/go-steputils/input"
@@ -38,7 +38,22 @@ func main() {
 
 	exitCode, err := runScript(runner, filePath, workingDir)
 	if err != nil {
-		fmt.Println(err.Error())
+		prettyError := fmt.Sprintf(
+			`%s
+Additional details:
+Script: \t%s
+Working directory: \t%s
+Exit code: \t%s
+Error: \t%s
+`,
+			colorstring.Red("Your script returned an error. Check the output above for the root cause."),
+			colorstring.Cyan(filePath),
+			colorstring.Cyan(workingDir),
+			colorstring.Red(fmt.Sprintf("%d", exitCode)),
+			colorstring.Red(err.Error()),
+		)
+		fmt.Println("-------------------") // Separate streamed stdout/stderr from the step's error message
+		fmt.Println(prettyError)
 	}
 
 	os.Exit(exitCode)
@@ -52,23 +67,12 @@ func runScript(runner string, filePath string, workingDir string) (int, error) {
 		binary = splitRunner[0]
 		paramList = splitRunner[1:]
 	} else {
-		return 1, fmt.Errorf("Error: %s", err.Error())
+		return 1, fmt.Errorf("shell quote split error: %s", err.Error())
 	}
 
 	paramList = append(paramList, filePath)
 
-	script := command.NewWithStandardOuts(binary, paramList...).SetStdin(os.Stdin).SetDir(workingDir)
+	script := command.NewWithStandardOuts(binary, paramList...).SetDir(workingDir)
 
-	exitCode, err := script.RunAndReturnExitCode()
-	if err != nil {
-		errorString := fmt.Sprintf("Error: %s, command: %#v", err.Error(), script.GetCmd())
-
-		if exitCode == 0 {
-			return 1, errors.New(errorString)
-		}
-
-		return exitCode, errors.New(errorString)
-	}
-
-	return exitCode, nil
+	return script.RunAndReturnExitCode()
 }
