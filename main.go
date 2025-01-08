@@ -39,18 +39,10 @@ func main() {
 	exitCode, err := runScript(runner, filePath, workingDir)
 	if err != nil {
 		prettyError := fmt.Sprintf(
-			`%s
-Additional details:
-Script: \t%s
-Working directory: \t%s
-Exit code: \t%s
-Error: \t%s
-`,
-			colorstring.Red("Your script returned an error. Check the output above for the root cause."),
+			`Script: %s
+Working directory: %s`,
 			colorstring.Cyan(filePath),
 			colorstring.Cyan(workingDir),
-			colorstring.Red(fmt.Sprintf("%d", exitCode)),
-			colorstring.Red(err.Error()),
 		)
 		fmt.Println("-------------------") // Separate streamed stdout/stderr from the step's error message
 		fmt.Println(prettyError)
